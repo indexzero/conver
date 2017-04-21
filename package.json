@@ -4,11 +4,12 @@
   "description": "Comparisons for concrete semantic versions (i.e. compare 1.2.3 instead of ^1.2.3)",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha test.js"
+    "test": "nyc mocha test.js",
+    "report": "nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/indexzero/conver.git"
+    "url": "git@github.com:indexzero/conver.git"
   },
   "keywords": [
     "semver",
@@ -20,6 +21,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/indexzero/conver/issues"
+  },
+  "engines": {
+    "node": ">= 6.10.2"
   },
   "homepage": "https://github.com/indexzero/conver#readme",
   "devDependencies": {
