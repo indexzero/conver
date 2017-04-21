@@ -1,0 +1,30 @@
+{
+  "name": "conver",
+  "version": "0.0.0",
+  "description": "Comparisons for concrete semantic versions (i.e. compare 1.2.3 instead of ^1.2.3)",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indexzero/conver.git"
+  },
+  "keywords": [
+    "semver",
+    "versions",
+    "semantic",
+    "versioning"
+  ],
+  "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indexzero/conver/issues"
+  },
+  "homepage": "https://github.com/indexzero/conver#readme",
+  "devDependencies": {
+    "assume": "^1.5.1",
+    "mocha": "^3.2.0",
+    "nyc": "^10.2.0"
+  }
+}
