@@ -22,70 +22,53 @@ class ConVer {
   }
 
   /**
-   * Returns true if `lver` is EQUAL to `rver` in semver. Since they are both
+   * Returns true if `v1 == v2` in semver. Since they are both
    * concrete semver strings their equality will be lexographic.
-   * @param   {String}  lver Concrete version number
-   * @param   {String}  rver Concrete version number
+   * @param   {String} v1 Concrete version number.
+   * @param   {String} v2 Concrete version number.
    * @returns {Boolean} Value indicating equality result.
    */
-  eq(lver, rver) {
-    return lver === rver;
+  eq(v1, v2) {
+    return v1 === v2;
   }
 
   /**
-   * Returns true if `lver` is LESS than `rver` in semver.
-   * @param   {String}  lver Concrete version number
-   * @param   {String}  rver Concrete version number
+   * Return 0 if `v1 == v2`, or 1 if `v1` is greater, or -1 if `v2` is greater.
+   * @param   {String} v1 Concrete version number.
+   * @param   {String} v2 Concrete version number.
+   * @returns {Number} 0, -1, or -1 for equal, gt, and lt respectively.
+   */
+  compare(v1, v2) {
+    if (this.eq(v1, v2)) { return 0; }
+
+    const lval = this.parse(v1);
+    const rval = this.parse(v2);
+    for (let i = 0; i < 4; i++) {
+      const lnum = lval.shift();
+      const rnum = rval.shift();
+      if (lnum > rnum) { return 1; }
+      if (lnum < rnum) { return -1; }
+    }
+  }
+
+  /**
+   * Returns true if `v1` is LESS than `v2` in semver.
+   * @param   {String} v1 Concrete version number.
+   * @param   {String} v2 Concrete version number.
    * @returns {Boolean} Value indicating less than comparison result.
    */
-  lt(lver, rver) {
-    if (this.eq(lver, rver)) { return false; }
-
-    const lval = this.parse(lver);
-    const rval = this.parse(rver);
-    for (let i = 0; i < 3; i++) {
-      const lnum = lval.shift();
-      const rnum = rval.shift();
-      if (lnum > rnum) { return false; }
-    }
-
-    if (lval.length && !rval.length) {
-      return false;
-    } else if (lval.length && rval.length) {
-      const lbuild = lval.shift();
-      const rbuild = rval.shift();
-      return lbuild < rbuild;
-    }
-
-    return true;
+  lt(v1, v2) {
+    return this.compare(v1, v2) === -1;
   }
 
   /**
-   * Returns true if `lver` is GREATER than `rver` in semver.
-   * @param   {String}  lver Concrete version number
-   * @param   {String}  rver Concrete version number
+   * Returns true if `v1` is GREATER than `v2` in semver.
+   * @param   {String} v1 Concrete version number.
+   * @param   {String} v2 Concrete version number.
    * @returns {Boolean} Value indicating greater than comparison result.
    */
-  gt(lver, rver) {
-    if (this.eq(lver, rver)) { return false; }
-
-    const lval = this.parse(lver);
-    const rval = this.parse(rver);
-    for (let i = 0; i < 3; i++) {
-      const lnum = lval.shift();
-      const rnum = rval.shift();
-      if (lnum < rnum) { return false; }
-    }
-
-    if (!lval.length && rval.length) {
-      return false;
-    } else if (lval.length && rval.length) {
-      const lbuild = lval.shift();
-      const rbuild = rval.shift();
-      return lbuild > rbuild;
-    }
-
-    return true;
+  gt(v1, v2) {
+    return this.compare(v1, v2) === 1;
   }
 }
 
