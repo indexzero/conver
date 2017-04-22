@@ -1,13 +1,24 @@
 const parser = /^([\d]+)\.([\d]+)\.([\d]+)(.*)$/;
 
+/**
+ * Represents a comparator for comparisons between concrete semantic versions
+ * (i.e. compare `1.2.3` and `3.4.5`, but NOT `^1.2.3` NOR `~3.4.5`).
+ */
 class ConVer {
+  /**
+   * Returns an array representing the [major, min, patch, build] for the given `ver`
+   * @param   {String} ver Concrete version number
+   * @returns {Array}  All components of the parsed version if they exist.
+   */
   parse(ver) {
     let [, major, minor, patch, build] = parser.exec(ver);
     if (build) {
       build = build.slice(1);
     }
 
-    return [major, minor, patch, build].filter(Boolean);
+    return [major, minor, patch]
+      .map(num => parseInt(num, 10))
+      .concat(build || '');
   }
 
   /**
