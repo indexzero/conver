@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- [#2] Add legal check before compare to make sure all the inputs are legal semvers.
+
 ### 1.1.0
 
 - Handle lexographic comparison edge cases.
@@ -9,3 +11,6 @@
 ### 1.0.0
 
 - Initial version
+
+[#2]: https://github.com/indexzero/conver/pull/2
+
