@@ -6,6 +6,19 @@ const parser = /^([\d]+)\.([\d]+)\.([\d]+)(.*)$/;
  */
 class ConVer {
   /**
+   * Check if the version arg is legal or not.
+   * @param {String} ver Concrete version number
+   * @returns {Boolean} true if version is legal, false if not.
+   */
+  legalCheck(ver) {
+    if (typeof ver !== 'string' || !parser.exec(ver)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Returns an array representing the [major, min, patch, build] for the given `ver`
    * @param   {String} ver Concrete version number
    * @returns {Array}  All components of the parsed version if they exist.
@@ -39,6 +52,10 @@ class ConVer {
    * @returns {Number} 0, -1, or -1 for equal, gt, and lt respectively.
    */
   compare(v1, v2) {
+    if (!this.legalCheck(v1) || !this.legalCheck(v2)) {
+      return new Error(`Inputs contains illegal semver`);
+    }
+
     if (this.eq(v1, v2)) { return 0; }
 
     const lval = this.parse(v1);
