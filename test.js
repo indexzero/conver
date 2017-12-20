@@ -97,4 +97,38 @@ describe('Concrete Versions', function () {
       assume(conver.lt('1.2.3', '1.2.3')).false();
     });
   });
+
+  describe('compare', function () {
+    it(`compare('1', '1.2.2') => error`, function () {
+      assume(conver.compare('1', '1.2.2').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare('1.2.2', '0.1') => error`, function () {
+      assume(conver.compare('1.2.2', '0.1').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare('undefined', 'undefined') => error`, function () {
+      assume(conver.compare('undefined', 'undefined').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare('null', 'null') => error`, function () {
+      assume(conver.compare('null', 'null').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare([], 123) => error`, function () {
+      assume(conver.compare([], 123).message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare('1.2.2', '1.2.1') => 1`, function () {
+      assume(conver.compare('1.2.2', '1.2.1')).equals(1);
+    });
+
+    it(`compare('1.2.2', '2.0.0') => -1`, function () {
+      assume(conver.compare('1.2.2', '2.0.0')).equals(-1);
+    });
+
+    it(`compare('1.2.2-beta', '1.2.2-beta') => 0`, function () {
+      assume(conver.compare('1.2.2-beta', '1.2.2-beta')).equals(0);
+    });
+  });
 });
