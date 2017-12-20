@@ -1,6 +1,11 @@
 # CHANGELOG
 
+### 1.1.1
+
 - [#2] Add legal check before compare to make sure all the inputs are legal semvers.
+- Update `devDependencies`
+- Add `.gitattributes`.
+- Add additional test cases for partial semver strings (e.g. '1', '1.2').
 
 ### 1.1.0
 
