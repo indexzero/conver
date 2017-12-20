@@ -6,25 +6,19 @@ const parser = /^([\d]+)\.([\d]+)\.([\d]+)(.*)$/;
  */
 class ConVer {
   /**
-   * Check if the version arg is legal or not.
-   * @param {String} ver Concrete version number
-   * @returns {Boolean} true if version is legal, false if not.
-   */
-  legalCheck(ver) {
-    if (typeof ver !== 'string' || !parser.exec(ver)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
    * Returns an array representing the [major, min, patch, build] for the given `ver`
    * @param   {String} ver Concrete version number
    * @returns {Array}  All components of the parsed version if they exist.
    */
   parse(ver) {
-    let [, major, minor, patch, build] = parser.exec(ver);
+    // semVer is illegal
+    if (typeof ver !== 'string') { return; }
+
+    const parsedVer = parser.exec(ver);
+    if (!parsedVer) { return; }
+
+    let [, major, minor, patch, build] = parsedVer;
+
     if (build) {
       build = build.slice(1);
     }
@@ -52,14 +46,19 @@ class ConVer {
    * @returns {Number} 0, -1, or -1 for equal, gt, and lt respectively.
    */
   compare(v1, v2) {
-    if (!this.legalCheck(v1) || !this.legalCheck(v2)) {
+    // To be defensive
+    // Switch the logic here
+    // First filter out the illegal inputs but passed cases
+    // e.g. `undefined === undefined` and `null === null`
+    const lval = this.parse(v1);
+    const rval = this.parse(v2);
+
+    if (!lval || !rval) {
       return new Error(`Inputs contains illegal semver`);
     }
 
     if (this.eq(v1, v2)) { return 0; }
 
-    const lval = this.parse(v1);
-    const rval = this.parse(v2);
     for (let i = 0; i < 4; i++) {
       const lnum = lval.shift();
       const rnum = rval.shift();

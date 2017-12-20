@@ -2,32 +2,6 @@ const assume = require('assume');
 const conver = require('./');
 
 describe('Concrete Versions', function () {
-  describe('legalCheck', function () {
-    it(`'1.2.2' => true`, function () {
-      assume(conver.legalCheck('1.2.2')).equals(true);
-    });
-
-    it(`'1' => false`, function () {
-      assume(conver.legalCheck('1')).equals(false);
-    });
-
-    it(`'' => false`, function () {
-      assume(conver.legalCheck('')).equals(false);
-    });
-
-    it(`null => false`, function () {
-      assume(conver.legalCheck(null)).equals(false);
-    });
-
-    it(`undefined => false`, function () {
-      assume(conver.legalCheck(undefined)).equals(false);
-    });
-
-    it(`{} => false`, function () {
-      assume(conver.legalCheck({})).equals(false);
-    });
-  });
-
   describe('parse', function () {
     it(`'1.2.3' => [1, 2, 3, '']`, function () {
       assume(conver.parse('1.2.3')).deep.equals([1, 2, 3, '']);
@@ -131,6 +105,18 @@ describe('Concrete Versions', function () {
 
     it(`compare('1.2.2', '0.1') => error`, function () {
       assume(conver.compare('1.2.2', '0.1').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare('undefined', 'undefined') => error`, function () {
+      assume(conver.compare('undefined', 'undefined').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare('null', 'null') => error`, function () {
+      assume(conver.compare('null', 'null').message).equals('Inputs contains illegal semver');
+    });
+
+    it(`compare([], 123) => error`, function () {
+      assume(conver.compare([], 123).message).equals('Inputs contains illegal semver');
     });
 
     it(`compare('1.2.2', '1.2.1') => 1`, function () {
