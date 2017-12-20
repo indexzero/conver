@@ -11,14 +11,14 @@ class ConVer {
    * @returns {Array}  All components of the parsed version if they exist.
    */
   parse(ver) {
-    // semVer is illegal
-    if (typeof ver !== 'string') { return; }
+    // We cannot parse non-string values.
+    if (typeof ver !== 'string') { return null; }
 
-    const parsedVer = parser.exec(ver);
-    if (!parsedVer) { return; }
+    // The string does not conform to semver (i.e. X.Y.Z).
+    const parts = parser.exec(ver);
+    if (!parts) { return null; }
 
-    let [, major, minor, patch, build] = parsedVer;
-
+    let [, major, minor, patch, build] = parts;
     if (build) {
       build = build.slice(1);
     }
@@ -46,15 +46,13 @@ class ConVer {
    * @returns {Number} 0, -1, or -1 for equal, gt, and lt respectively.
    */
   compare(v1, v2) {
-    // To be defensive
-    // Switch the logic here
-    // First filter out the illegal inputs but passed cases
-    // e.g. `undefined === undefined` and `null === null`
+    // Attempt to parse both sides of the comparison.
     const lval = this.parse(v1);
     const rval = this.parse(v2);
 
-    if (!lval || !rval) {
-      return new Error(`Inputs contains illegal semver`);
+    // Then throw if either of the inputs are illegal.
+    if (lval === null || rval === null) {
+      throw new Error(`Inputs contains illegal semver`);
     }
 
     if (this.eq(v1, v2)) { return 0; }

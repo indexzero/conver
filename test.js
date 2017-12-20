@@ -3,6 +3,22 @@ const conver = require('./');
 
 describe('Concrete Versions', function () {
   describe('parse', function () {
+    it(`'1' => null`, function () {
+      assume(conver.parse('1')).equals(null);
+    })
+
+    it(`'1.' => null`, function () {
+      assume(conver.parse('1.')).equals(null);
+    });
+
+    it(`'1.2' => null`, function () {
+      assume(conver.parse('1.2')).equals(null);
+    });
+
+    it(`'1.2.' => null`, function () {
+      assume(conver.parse('1.2.')).equals(null);
+    });
+
     it(`'1.2.3' => [1, 2, 3, '']`, function () {
       assume(conver.parse('1.2.3')).deep.equals([1, 2, 3, '']);
     });
@@ -99,24 +115,34 @@ describe('Concrete Versions', function () {
   });
 
   describe('compare', function () {
-    it(`compare('1', '1.2.2') => error`, function () {
-      assume(conver.compare('1', '1.2.2').message).equals('Inputs contains illegal semver');
+    it(`compare('1', '1.2.2') throws Error`, function () {
+      assume(function () {
+        conver.compare('1', '1.2.2');
+      }).throws('Inputs contains illegal semver');
     });
 
-    it(`compare('1.2.2', '0.1') => error`, function () {
-      assume(conver.compare('1.2.2', '0.1').message).equals('Inputs contains illegal semver');
+    it(`compare('1.2.2', '0.1') throws Error`, function () {
+      assume(function () {
+        conver.compare('1.2.2', '0.1');
+      }).throws('Inputs contains illegal semver');
     });
 
-    it(`compare('undefined', 'undefined') => error`, function () {
-      assume(conver.compare('undefined', 'undefined').message).equals('Inputs contains illegal semver');
+    it(`compare('undefined', 'undefined') throws Error`, function () {
+      assume(function () {
+        conver.compare('undefined', 'undefined');
+      }).throws('Inputs contains illegal semver');
     });
 
-    it(`compare('null', 'null') => error`, function () {
-      assume(conver.compare('null', 'null').message).equals('Inputs contains illegal semver');
+    it(`compare('null', 'null') throws Error`, function () {
+      assume(function () {
+        conver.compare('null', 'null');
+      }).throws('Inputs contains illegal semver');
     });
 
-    it(`compare([], 123) => error`, function () {
-      assume(conver.compare([], 123).message).equals('Inputs contains illegal semver');
+    it(`compare([], 123) throws Error`, function () {
+      assume(function () {
+        conver.compare([], 123);
+      }).throws('Inputs contains illegal semver');
     });
 
     it(`compare('1.2.2', '1.2.1') => 1`, function () {
