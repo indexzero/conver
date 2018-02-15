@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.2
+
+- [#3] Throw better error messages.
+
 ### 1.1.1
 
 - [#2] Add legal check before compare to make sure all the inputs are legal semvers.
@@ -18,4 +22,4 @@
 - Initial version
 
 [#2]: https://github.com/indexzero/conver/pull/2
-
+[#3]: https://github.com/indexzero/conver/pull/3
