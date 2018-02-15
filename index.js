@@ -52,7 +52,7 @@ class ConVer {
 
     // Then throw if either of the inputs are illegal.
     if (lval === null || rval === null) {
-      throw new Error(`Inputs contains illegal semver`);
+      throw new Error(`Inputs { ${v1}, ${v2} } contain illegal semver`);
     }
 
     if (this.eq(v1, v2)) { return 0; }

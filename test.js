@@ -118,31 +118,31 @@ describe('Concrete Versions', function () {
     it(`compare('1', '1.2.2') throws Error`, function () {
       assume(function () {
         conver.compare('1', '1.2.2');
-      }).throws('Inputs contains illegal semver');
+      }).throws('contain illegal semver');
     });
 
     it(`compare('1.2.2', '0.1') throws Error`, function () {
       assume(function () {
         conver.compare('1.2.2', '0.1');
-      }).throws('Inputs contains illegal semver');
+      }).throws('Inputs { 1.2.2, 0.1 } contain illegal semver');
     });
 
     it(`compare('undefined', 'undefined') throws Error`, function () {
       assume(function () {
         conver.compare('undefined', 'undefined');
-      }).throws('Inputs contains illegal semver');
+      }).throws('Inputs { undefined, undefined } contain illegal semver');
     });
 
     it(`compare('null', 'null') throws Error`, function () {
       assume(function () {
         conver.compare('null', 'null');
-      }).throws('Inputs contains illegal semver');
+      }).throws('Inputs { null, null } contain illegal semver');
     });
 
     it(`compare([], 123) throws Error`, function () {
       assume(function () {
         conver.compare([], 123);
-      }).throws('Inputs contains illegal semver');
+      }).throws('Inputs { , 123 } contain illegal semver');
     });
 
     it(`compare('1.2.2', '1.2.1') => 1`, function () {
