@@ -36,6 +36,33 @@ describe('Concrete Versions', function () {
     });
   })
 
+  describe('stringify', function () {
+    it(`[1, 2, 3, 'alpha'] => '1.2.3-alpha'`, function () {
+      assume(conver.stringify([1, 2, 3, 'alpha'])).equals('1.2.3-alpha');
+    });
+
+    it(`[1, 2, 3] => '1.2.3'`, function () {
+      assume(conver.stringify([1, 2, 3])).equals('1.2.3');
+    });
+
+    it(`'1.2.3' => '1.2.3'`, function () {
+      assume(conver.stringify('1.2.3')).equals('1.2.3');
+    });
+
+
+    it(`[1, 2] => ''`, function () {
+      assume(conver.stringify([1, 2])).equals('');
+    });
+
+    it(`[1] => ''`, function () {
+      assume(conver.stringify([1])).equals('');
+    });
+
+    it(`null => ''`, function () {
+      assume(conver.stringify(null)).equals('');
+    });
+  });
+
   describe('eq', function () {
     it(`eq('1.2.3', '9.8.0') => false`, function () {
       assume(conver.eq('1.2.3', '9.8.0')).false();
