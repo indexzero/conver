@@ -29,6 +29,28 @@ class ConVer {
   }
 
   /**
+   * Returns a semver string representation of the specified `src`.
+   * @param  {string|Array} src Source version to stringify
+   * @return {string} Stringified value of the source `x.y.z-b`.
+   */
+  stringify(src) {
+    const parts = typeof src === 'string'
+      ? this.parse(src)
+      : src;
+
+    if (!parts || parts.length < 3) {
+      return '';
+    }
+
+    const [major, minor, patch] = parts;
+    const build = parts.length === 4 && parts[3]
+      ? `-${parts[3]}`
+      : '';
+
+    return `${major}.${minor}.${patch}${build}`;
+  }
+
+  /**
    * Returns true if `v1 == v2` in semver. Since they are both
    * concrete semver strings their equality will be lexographic.
    * @param   {String} v1 Concrete version number.

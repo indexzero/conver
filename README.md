@@ -16,6 +16,9 @@ In this more limited use-case case including all 1000+ lines of [semver] into yo
 - `lt(v1, v2)`: returns `true` if `v1` is less than `v2`.
 - `equal(v1, v2)`: returns `true` if `v1` is equal to `v2`.
 - `compare(v1, v2)` returns 0 if `v1 == v2`, or 1 if `v1` is greater, or -1 if `v2` is greater.
+- `parse(v1)`: returns an array of `[major, minor, patch, build]`
+- `stringify(src)`: returns a string representation of the specified
+  `src` – an Array of `[major, minor, patch, build]`.
 
 ``` js
 conver.gt('3.4.5', '1.2.3'); // true
@@ -26,6 +29,14 @@ conver.lt('3.4.5', '1.2.3'); // false
 
 conver.eq('1.2.3', '9.8.0'); // false
 conver.eq('1.2.3', '1.2.3'); // true
+
+conver.parse('1.2.3');       // [1, 2, 3, '']
+conver.parse('1.2.3-alpha'); // [1, 2, 3, 'alpha']
+
+conver.stringify([1, 2, 3, 'alpha']); // '1.2.3-alpha'
+conver.stringify([1, 2, 3]);          // '1.2.3'
+conver.stringify([1, 2]);             // '1.2'
+conver.stringify([1]);                // '1'
 ```
 
 ## Test
