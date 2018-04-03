@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.2.0
+
+- [#4] Add `conver.stringify`
+
 ### 1.1.2
 
 - [#3] Throw better error messages.
